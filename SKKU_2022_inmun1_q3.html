@@ -2,57 +2,119 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>논술 평가 전문 리포트 v2 (각진) · SKKU 2022 인문1 문제3</title>
   <style>
+    /* =====================
+       Design Tokens
+    ====================== */
     :root{
       --bg:#faf9f7; --paper:#ffffff; --ink:#171816; --muted:#6e6b66; --line:#e9e5dc;
       --brand:#466a57; --brand-2:#b8c7bd; --accent:#cfb07d; --toc-bg:#f8f6f1; --quote:#f2f4f1;
       --radius:0;
       --text-width:74ch;
+      --space:28px;
+      --pad:40px;
+      --pad-sm:18px;
     }
+
+    /* Base */
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{margin:0;background:var(--bg);color:var(--ink);
-         font-family:'Noto Sans KR',system-ui,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
-         line-height:1.9;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
-         letter-spacing:-.005em}
-    .wrap{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:260px 1fr;gap:28px;padding:24px}
-    aside{position:sticky;top:0;align-self:start;height:100vh;overflow:auto;background:var(--toc-bg);
-          border:1px solid var(--line);padding:16px 14px;border-radius:0}
-    main{background:var(--paper);border:1px solid var(--line);padding:40px;box-shadow:none;border-radius:0}
+    body{
+      margin:0;background:var(--bg);color:var(--ink);
+      font-family:'Noto Sans KR',system-ui,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+      line-height:1.9;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+      letter-spacing:-.005em;
+      -webkit-text-size-adjust:100%;
+    }
+
+    /* Layout */
+    .wrap{
+      max-width:1280px;margin:0 auto;display:grid;grid-template-columns:260px 1fr;
+      gap:var(--space);padding:24px;
+    }
+    aside.toc-desktop{
+      position:sticky;top:0;align-self:start;height:100svh;overflow:auto;background:var(--toc-bg);
+      border:1px solid var(--line);padding:16px 14px;border-radius:var(--radius);
+    }
+    main{
+      background:var(--paper);border:1px solid var(--line);padding:var(--pad);
+      box-shadow:none;border-radius:var(--radius);
+    }
     .content{max-width:var(--text-width)}
     .brand{display:flex;align-items:center;gap:10px;margin-bottom:10px}
     .dot{width:10px;height:10px;background:var(--brand)}
-    h1{margin:0 0 4px;font-size:1.9rem;font-weight:900;letter-spacing:-.01em}
+    h1{margin:0 0 6px;font-size:clamp(1.4rem, 2vw + 1rem, 2rem);font-weight:900;letter-spacing:-.01em}
     .meta{color:var(--muted);font-size:.96rem;margin:2px 0 22px}
-    .hero{border-left:6px solid var(--brand);background:linear-gradient(90deg,#fff, #fff, #f9faf4);padding:18px 20px;margin:0 0 28px;border-radius:0}
+    .hero{border-left:6px solid var(--brand);background:linear-gradient(90deg,#fff, #fff, #f9faf4);
+      padding:18px 20px;margin:0 0 28px;border-radius:var(--radius)}
     .metrics{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 0}
-    .metric{border:1px solid var(--line);padding:10px 12px;background:#fff;box-shadow:none;border-radius:0}
+    .metric{border:1px solid var(--line);padding:10px 12px;background:#fff;box-shadow:none;border-radius:var(--radius)}
     .metric b{font-size:1.25rem}
-    section{margin:56px 0;scroll-margin-top:96px;border-radius:0}
+    section{margin:56px 0;scroll-margin-top:96px}
     section > h2{font-size:1.32rem;margin:0 0 12px;font-weight:900;position:relative;padding-left:14px}
     section > h2:before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:linear-gradient(180deg,var(--brand),var(--brand-2))}
     h3{margin:20px 0 8px;font-size:1.08rem}
     p{margin:12px 0}
     ul,ol{margin:12px 0 12px 1.2rem}
-    blockquote{background:var(--quote);border-left:4px solid var(--brand);margin:18px 0;padding:12px 14px;border-radius:0}
-    pre{background:#fbfaf7;border:1px dashed var(--line);padding:12px;white-space:pre-wrap;word-break:break-word;border-radius:0}
-    table{border-collapse:collapse;width:100%;background:#fff;border:1px solid var(--line)}
-    th,td{border:1px solid var(--line);padding:8px 10px;text-align:left}
+    blockquote{background:var(--quote);border-left:4px solid var(--brand);margin:18px 0;padding:12px 14px;border-radius:var(--radius)}
+    pre{background:#fbfaf7;border:1px dashed var(--line);padding:12px;white-space:pre-wrap;word-break:break-word;border-radius:var(--radius)}
     code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-    .toc h3{margin:6px 0 10px;font-size:1rem;font-weight:900;color:#3a3b35}
-    .toc ul{list-style:none;padding:0;margin:0}
-    .toc li{margin:4px 0}
-    .toc a{display:block;text-decoration:none;color:#2e2f2a;padding:6px 8px;border-radius:0}
-    .toc a:hover{background:#efece5}
-    .toc .active{background:#e6f0ea;border-left:3px solid var(--brand);border-radius:0}
+    .toc-desktop h3{margin:6px 0 10px;font-size:1rem;font-weight:900;color:#3a3b35}
+    .toc-desktop ul{list-style:none;padding:0;margin:0}
+    .toc-desktop li{margin:4px 0}
+    .toc-desktop a{display:block;text-decoration:none;color:#2e2f2a;padding:6px 8px;border-radius:var(--radius)}
+    .toc-desktop a:hover{background:#efece5}
+    .toc-desktop .active{background:#e6f0ea;border-left:3px solid var(--brand)}
+
     .toolbar{display:flex;justify-content:flex-end;gap:10px;margin:-12px 0 16px}
-    .btn{appearance:none;border:1px solid var(--line);background:#fff;padding:8px 10px;cursor:pointer;border-radius:0}
+    .btn{appearance:none;border:1px solid var(--line);background:#fff;padding:8px 10px;cursor:pointer;border-radius:var(--radius)}
     .btn:hover{background:#faf8f4}
-    .kbd{font-family:ui-monospace, Menlo, Consolas, monospace; font-size:.9em; border:1px solid var(--line); padding:0 4px}
-    .note{font-size:.95rem;color:#4a4a44}
-    .hr{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);border:0;margin:28px 0}
+
+    /* ===== Mobile TOC (collapsible) ===== */
+    .toc-mobile{display:none;margin:0 0 12px}
+    .toc-mobile details{
+      border:1px solid var(--line);background:var(--toc-bg);border-radius:var(--radius);
+    }
+    .toc-mobile summary{
+      list-style:none;cursor:pointer;padding:12px 14px;font-weight:800;display:flex;align-items:center;gap:8px;
+    }
+    .toc-mobile summary::-webkit-details-marker{display:none}
+    .toc-mobile .inner{padding:10px 12px;border-top:1px solid var(--line)}
+    .toc-mobile ul{list-style:none;padding:0;margin:0}
+    .toc-mobile li{margin:6px 0}
+    .toc-mobile a{display:block;text-decoration:none;color:#2e2f2a;padding:10px 8px}
+    .toc-mobile a:active{background:#e6f0ea}
+
+    /* ===== Responsive ===== */
+    @media (max-width: 960px){
+      .wrap{grid-template-columns:1fr;gap:16px;padding:16px}
+      aside.toc-desktop{display:none}
+      .toc-mobile{display:block}
+      main{padding:var(--pad-sm)}
+      section{margin:36px 0;scroll-margin-top:72px}
+      .metrics{gap:8px}
+      .metric b{font-size:1.1rem}
+      .meta{font-size:.9rem}
+    }
+
+    /* Prevent iOS bottom bar overlap */
+    @supports (padding: max(0px)){
+      main{padding-bottom:calc(var(--pad) + env(safe-area-inset-bottom))}
+      @media (max-width:960px){
+        main{padding-bottom:calc(var(--pad-sm) + env(safe-area-inset-bottom))}
+      }
+    }
+
+    /* ===== Print ===== */
+    @media print{
+      body{background:#fff}
+      .wrap{padding:0;gap:0}
+      aside, .toc-mobile{display:none}
+      main{border:none;padding:0;box-shadow:none}
+      section{page-break-inside:avoid}
+    }
   </style>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -79,10 +141,28 @@
       URL.revokeObjectURL(url);
     }
   </script>
+<script>
+    // Highlight active section in desktop TOC (no deps)
+    document.addEventListener('DOMContentLoaded', () => {
+      const links = Array.from(document.querySelectorAll('.toc-desktop a'));
+      const map = new Map(links.map(a => [a.getAttribute('href'), a]));
+      const onScroll = () => {
+        let current = null;
+        document.querySelectorAll('section[id]').forEach(sec => {
+          const rect = sec.getBoundingClientRect();
+          if(rect.top < 120) current = sec.id;
+        });
+        links.forEach(a => a.classList.remove('active'));
+        if(current && map.has('#'+current)) map.get('#'+current).classList.add('active');
+      };
+      document.addEventListener('scroll', onScroll, {passive:true});
+      onScroll();
+    });
+  </script>
 </head>
 <body>
   <div class="wrap">
-    <aside class="toc">
+    <aside class="toc-desktop">
       <div class="brand"><span class="dot"></span><strong>반안논술</strong></div>
       <h3>목차</h3>
       <ul>
@@ -101,6 +181,25 @@
       <p class="note">좌측 목차로 바로 이동할 수 있습니다.</p>
     </aside>
     <main>
+      <nav class="toc-mobile" aria-label="모바일 목차">
+        <details>
+          <summary><span class="dot" style="width:8px;height:8px"></span> 목차 바로가기</summary>
+          <div class="inner">
+            <ul>
+              <li><a href="#section1">1. 종합 평가</a></li>
+              <li><a href="#section2">2. 주요 강점</a></li>
+              <li><a href="#section3">3. 개선 방향</a></li>
+              <li><a href="#section4">4. 세부 평가</a></li>
+              <li><a href="#section5">5. 개선 방안</a></li>
+              <li><a href="#section6">6. 학습 자료</a></li>
+              <li><a href="#section7">7. 흔한 실수</a></li>
+              <li><a href="#section8">8. 표현 가이드</a></li>
+              <li><a href="#section9">9. 최종 의견</a></li>
+            </ul>
+          </div>
+        </details>
+      </nav>
+
       <div class="content">
         <header>
           <div class="brand"><span class="dot"></span><span style="font-weight:800">AI 기반 논술 평가 리포트 · 반안논술</span></div>
